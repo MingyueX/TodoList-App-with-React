@@ -1,0 +1,99 @@
+.todo_item {
+    display: flex;
+    outline: none;
+    border-radius: 10px;
+    background: hsl(240, 15%, 17%);
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 10px;
+    height: 60px;
+    overflow: hidden;
+    color: #fff;
+    font-size: 1.125rem;
+    font-weight: 500;
+  }
+  
+  @media (min-width: 33.75rem) {
+    .todo_item {
+      font-size: 1.5rem;
+    }
+  }
+  
+  .cell:first-child,
+  .cell:last-child {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+  }
+  
+  .cell:first-child {
+    padding-right: 20px;
+  }
+  .cell:last-child {
+    gap: 8px;
+  }
+  
+  .cell:nth-child(2) {
+    display: flex;
+    flex: 1 1 0%;
+    padding-right: 30px;
+    overflow: hidden;
+    align-items: center;
+  }
+  
+  .title {
+    max-width: 100%;
+    line-height: 60px;
+    overflow: hidden;
+    outline: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .icon {
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    border: 0;
+    padding: 0;
+    border-radius: 10px;
+    width: 35px;
+    height: 35px;
+    font-size: 1.35rem;
+    background-color: hsl(235, 19%, 12%);
+    color: hsl(240, 67%, 64%);
+  }
+  
+  .icon:hover {
+    color: #999;
+    cursor: pointer;
+  }
+  
+  .todo-item_completed .title {
+    color: #666;
+    text-decoration: line-through hsl(240, 67%, 64%);
+  }
+  
+  .todo-item_completed .checkIcon {
+    color: hsl(240, 67%, 64%);
+  }
+  
+  .hide {
+    display: none !important;
+  }
+  
+  form {
+    width: 100%;
+  }
+  
+  .input {
+    outline: none;
+    border: 0;
+    padding: 0;
+    width: 100%;
+    height: 60px;
+    color: inherit;
+    font: inherit;
+    background: transparent;
+  }
