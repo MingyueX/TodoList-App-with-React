@@ -7,6 +7,7 @@ interface TodoContextInterface {
     removeTodo: (id: string) => void;
     checkTodo: (id: string) => void;
     updateTodo: (id: string, input: string) => void;
+    getTodo: () => void;
 }
 
 export const TodoContext = createContext<TodoContextInterface>({
@@ -15,6 +16,7 @@ export const TodoContext = createContext<TodoContextInterface>({
     removeTodo: (id: string) => {},
     checkTodo: (id: string) => {},
     updateTodo: (id: string, input: string) => {},
+    getTodo: () => {},
 });
 
 const TodoContextProvider: React.FunctionComponent = (props) => {
@@ -28,12 +30,14 @@ const TodoContextProvider: React.FunctionComponent = (props) => {
           setTodos((old) => {
               return old.concat(newTodo);
           });
+          localStorage.setItem('todos',JSON.stringify(todos.concat(newTodo)));
     };
 
     const removeTodoHandler = (id: string) => {
         setTodos((old) => {
             return old.filter((todo) => todo.id !== id);
         });
+        localStorage.setItem('todos',JSON.stringify(todos.filter((todo) => todo.id !== id)));
     };
 
     const checkTodoHandler = (id: string) => {
@@ -42,6 +46,7 @@ const TodoContextProvider: React.FunctionComponent = (props) => {
         const newTodo = { ...checkedTodo, isComplete: !checkedTodo.isComplete};
         let newTodos = [...todos];
         newTodos[checkedIndex] = newTodo;
+        localStorage.setItem('todos',JSON.stringify(newTodos));
         setTodos(newTodos);
     };
 
@@ -51,8 +56,15 @@ const TodoContextProvider: React.FunctionComponent = (props) => {
         const newTodo = { ...updateTodo, content: input};
         let newTodos = [...todos];
         newTodos[updateIndex] = newTodo;
+        localStorage.setItem('todos',JSON.stringify(newTodos));
         setTodos(newTodos);
     };
+
+    const getTodoHendler = () => {
+        const saved = localStorage.getItem("todos");
+        let newTodos: TodoModel[] = JSON.parse(saved ?? "");
+        setTodos(newTodos);
+    }
 
     const todoCtx: TodoContextInterface = {
         todoList: todos,
@@ -60,6 +72,7 @@ const TodoContextProvider: React.FunctionComponent = (props) => {
         removeTodo: removeTodoHandler,
         checkTodo: checkTodoHandler,
         updateTodo: updateTodoHandler,
+        getTodo: getTodoHendler,
     };
 
     return (

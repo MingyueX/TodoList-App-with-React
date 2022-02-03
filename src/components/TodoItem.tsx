@@ -16,7 +16,7 @@ const TodoItem = ({ todo }: TodoItemInterface) => {
     const checkTodo = todoContext.checkTodo;
     const updateTodo = todoContext.updateTodo;
 
-    const removeTodoHandler = (id: string) => {
+    const removeTodoHandler = () => {
         removeTodo(todo.id);
     };
 
