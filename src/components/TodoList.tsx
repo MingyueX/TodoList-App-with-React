@@ -4,8 +4,6 @@ import TodoItem from "./TodoItem";
 
 const TodoList = () => {
     const todoContext = useContext(TodoContext);
-
-    const todoList = todoContext.todoList;
     const getTodo = todoContext.getTodo;
 
     useEffect(() => {
@@ -13,11 +11,11 @@ const TodoList = () => {
     }, []);
     
     return (
-        <div className="todoList">
-            {todoList.map((todo) => (
+        <TodoContext.Consumer>
+            {todo => todo.todoList.map((todo) => (
                 <TodoItem key={todo.id} todo={todo}></TodoItem>
             ))}
-        </div>
+        </TodoContext.Consumer>
     )
 };
 
