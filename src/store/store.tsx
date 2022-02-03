@@ -20,7 +20,7 @@ export const TodoContext = createContext<TodoContextInterface>({
 const TodoContextProvider: React.FunctionComponent = (props) => {
     const [todos, setTodos] = useState<TodoModel[]>([]);
 
-    const createTodoHandler = (todo: TodoModel) => {
+    const createTodo = (todo: TodoModel) => {
         const newTodo: TodoModel = {
             ...todo,
             timeCreated: new Date().toISOString(),
@@ -30,13 +30,13 @@ const TodoContextProvider: React.FunctionComponent = (props) => {
           });
     };
 
-    const removeTodoHandler = (id: string) => {
+    const removeTodo = (id: string) => {
         setTodos((old) => {
             return old.filter((todo) => todo.id !== id);
         });
     };
 
-    const checkTodoHandler = (id: string) => {
+    const checkTodo = (id: string) => {
         const checkedIndex = todos.findIndex((todo) => todo.id === id);
         const checkedTodo = todos[checkedIndex];
         const newTodo = { ...checkedTodo, isComplete: !checkedTodo.isComplete};
@@ -45,7 +45,7 @@ const TodoContextProvider: React.FunctionComponent = (props) => {
         setTodos(newTodos);
     };
 
-    const updateTodoHandler = (id: string, input: string) => {
+    const updateTodo = (id: string, input: string) => {
         const updateIndex = todos.findIndex((todo) => todo.id === id);
         const updateTodo = todos[updateIndex];
         const newTodo = { ...updateTodo, content: input};
@@ -56,10 +56,10 @@ const TodoContextProvider: React.FunctionComponent = (props) => {
 
     const todoCtx: TodoContextInterface = {
         todoList: todos,
-        createTodo: createTodoHandler,
-        removeTodo: removeTodoHandler,
-        checkTodo: checkTodoHandler,
-        updateTodo: updateTodoHandler,
+        createTodo,
+        removeTodo,
+        checkTodo,
+        updateTodo,
     };
 
     return (

@@ -1,22 +1,17 @@
 import React, { useContext, useState } from "react";
 import TodoModel from "../model/todo";
 import { TodoContext } from "../store/store";
-import style from "./TodoItem.module.css"
+import style from "./TodoItem.module.css";
+import classNames from "classnames";
 
-interface TodoItemInterface {
-    todo: TodoModel;
-}
-
-const TodoItem = ({ todo }: TodoItemInterface) => {
+const TodoItem = ({ todo }: { todo: TodoModel}) => {
     const [todoContent, setTodoContent] = useState<string>(todo.content);
     const [isEditing, setIsEditing] = useState<boolean>(false);    
 
     const todoContext = useContext(TodoContext);
-    const removeTodo = todoContext.removeTodo;
-    const checkTodo = todoContext.checkTodo;
-    const updateTodo = todoContext.updateTodo;
+    const { removeTodo, checkTodo, updateTodo } = todoContext;
 
-    const removeTodoHandler = (id: string) => {
+    const removeTodoHandler = () => {
         removeTodo(todo.id);
     };
 
@@ -37,24 +32,26 @@ const TodoItem = ({ todo }: TodoItemInterface) => {
         }
     };
 
-    const todo_completed = todo.isComplete ? style["todo-item_completed"] : "";
+    const todoCompleted = todo.isComplete ? style["todo-item_completed"] : "";
 
-  const todo_editing = isEditing ? style["todo-item_editing"] : "";
+  const todoEditing = isEditing ? style["todo-item_editing"] : "";
 
   const hide = isEditing ? style.hide : "";
   return (
-    <div className={`${style.todo_item} ${todo_completed} ${todo_editing}`}>
+    <div className={classNames(style.todoItem, todoCompleted, todoEditing)}>
       <div className={style.cell}>
         <button
-          className={`${style.icon} ${style.checkIcon} ${hide}`}
+          className={classNames(style.icon, style.checkIcon, hide)}
           onClick={checkTodoHandler.bind(null, todo.id)}
         >
-            {!todo_completed ? null :
+            {!todoCompleted ? null :
           (<i className="fa fa-check"></i>)}
         </button>
       </div>
       <div className={style.cell}>
-        {!isEditing && <div className={style.title}>{todoContent}</div>}
+        {!isEditing && (
+          <div className={style.title}>{todoContent}</div>
+        )}
         {isEditing && (
           <input
             onKeyPress={onEditComplete}
@@ -74,7 +71,7 @@ const TodoItem = ({ todo }: TodoItemInterface) => {
         </button>
         <button
           className={`${style.icon} ${hide}`}
-          onClick={removeTodoHandler.bind(null, todo.id)}
+          onClick={removeTodoHandler}
         >
           <i className="fas fa-eraser"></i>
         </button>
